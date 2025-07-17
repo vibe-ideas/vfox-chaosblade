@@ -1,33 +1,17 @@
---- Each SDK may have different environment variable configurations.
---- This allows plugins to define custom environment variables (including PATH settings)
---- Note: Be sure to distinguish between environment variable settings for different platforms!
---- @param ctx table Context information
---- @field ctx.path string SDK installation directory
+--- Returns some environment variables that need to be set.
+--- @param ctx table
+--- @field ctx.version string The version of the tool currently in use
+--- @field ctx.rootPath string The root path of the tool currently in use
+--- @return table Environment variables to be set
 function PLUGIN:EnvKeys(ctx)
-    --- this variable is same as ctx.sdkInfo['plugin-name'].path
-    local mainPath = ctx.path
-    local mainSdkInfo = ctx.main
-    local mpath = mainSdkInfo.path
-    local mversion = mainSdkInfo.version
-    local mname = mainSdkInfo.name
-    local sdkInfo = ctx.sdkInfo['sdk-name']
-    local path = sdkInfo.path
-    local version = sdkInfo.version
-    local name = sdkInfo.name
     return {
         {
-            key = "JAVA_HOME",
-            value = mainPath
+            key = "CHAOSBLADE_HOME",
+            value = ctx.rootPath
         },
         {
             key = "PATH",
-            value = mainPath .. "/bin"
-        },
-        {
-            key = "PATH",
-            value = mainPath .. "/bin2"
-        },
-
+            value = ctx.rootPath .. "/bin"
+        }
     }
-
 end
