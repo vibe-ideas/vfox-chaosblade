@@ -26,16 +26,14 @@ end
 
 function util:GetDownloadInfo(version)
     local os_type = RUNTIME.osType
-    os_type = "linux"
-    -- if os_type ~= "Linux" then
-    --     return nil, "Unsupported OS type: " .. os_type
-    -- end
+    if os_type ~= "Linux" then
+        return nil, "Unsupported OS type: " .. os_type
+    end
 
     local arch = RUNTIME.archType
     if arch == "x86_64" then
         arch = "amd64"
     end
-    arch = "amd64"
     local file_name = string.format("chaosblade-%s-%s-%s.tar.gz", version, os_type, arch)
     local url = string.format("https://github.com/chaosblade-io/chaosblade/releases/download/v%s/%s", version, file_name)
 
