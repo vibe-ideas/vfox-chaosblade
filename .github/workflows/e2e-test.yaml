@@ -43,7 +43,7 @@ jobs:
           echo "===============PATH==============="
           echo $PATH
           echo "===============PATH==============="
-          status=$(blade -v | grep 1.7.4)
+          status=$(blade version | grep 1.7.4)
           if [ -z "$status" ]; then
             echo "chaosblade version is not 1.7.4"
             exit 1
