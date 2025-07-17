@@ -35,31 +35,36 @@ function util:GetDownloadInfo(version)
         return nil, "Unsupported OS type: " .. os_type
     end
 
-    local file_name = string.format("chaosblade-%s-%s-%s.tar.gz", version, os_type, arch)
+    -- Remove 'v' prefix from version for filename
+    local clean_version = version:gsub("^v", "")
+    local file_name = string.format("chaosblade-%s-%s-%s.tar.gz", clean_version, os_type, arch)
     local url = string.format("https://github.com/chaosblade-io/chaosblade/releases/download/%s/%s", version, file_name)
 
     local checksum_url = string.format("https://github.com/chaosblade-io/chaosblade/releases/download/%s/checksum.txt", version)
     local code, body = http.get(checksum_url)
-    if code ~= 200 then
-        return nil, "Failed to fetch checksum file."
-    end
-
     local checksum = ""
-    for line in string.gmatch(body, "[^\r\n]+") do
-        local sha, name = line:match("([a-f0-9]+)%s+(.+)")
-        if name == file_name then
-            checksum = sha
-            break
+    
+    -- Try to get checksum if available, but don't fail if not found
+    if code == 200 then
+        for line in string.gmatch(body, "[^\r\n]+") do
+            local sha, name = line:match("([a-f0-9]+)%s+(.+)")
+            if name == file_name then
+                checksum = sha
+                break
+            end
         end
     end
-    if checksum == "" then
-        return nil, "Failed to find checksum for " .. file_name
-    end
-
-    return {
-        url = url,
-        sha256 = checksum
+    
+    -- Return the download info, with or without checksum
+    local result = {
+        url = url
     }
+    
+    if checksum ~= "" then
+        result.sha256 = checksum
+    end
+    
+    return result
 end
 
 return util
