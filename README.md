@@ -1,15 +1,59 @@
-# vfox-plugin-template
+# vfox-chaosblade plugin
 
-This is a [vfox plugin](https://vfox.lhan.me/plugins/create/howto.html) template with CI that package and publish the plugin.
+<a href="https://github.com/version-fox/vfox"><img alt="vfox logo" height="64" src="https://vfox.lhan.me/vfox.svg"></a>
+
+[![E2E tests](https://github.com/vibe-ideas/vfox-chaosblade/actions/workflows/e2e_test.yaml/badge.svg)](https://github.com/vibe-ideas/vfox-chaosblade/actions/workflows/e2e_test.yaml)
+
+Chaosblade [vfox](https://github.com/version-fox/vfox) plugin. Use vfox to manage multiple [Chaosblade](https://github.com/chaosblade-io/chaosblade) versions on Linux, Darwin MacOS, and Windows.
+
+## Requirements
+
+- Linux/macOS/Windows
+- No additional build tools required (uses pre-built binaries)
 
 ## Usage
 
-1. [Generate](https://github.com/version-fox/vfox-plugin-template/generate) a new repository based on this template.
-2. Configure [metadata](https://github.com/version-fox/vfox-plugin-template/blob/main/metadata.lua) information
-3. To develop your plugin further, please read [the plugins create section of the docs](https://vfox.lhan.me/plugins/create/howto.html).
+```shell
+# Install plugin
+vfox add --source https://github.com/vibe-ideas/vfox-chaosblade/archive/refs/heads/main.zip chaosblade
 
+# List available versions
+vfox search chaosblade
 
-## How to publish?
+# Install a specific version
+vfox install chaosblade@1.7.4
 
-1. Push a new tag to the repository which name is `vX.Y.Z` (X.Y.Z is the version number).
-2. The CI will automatically package, then publish [release](https://github.com/version-fox/vfox-plugin-template/releases/tag/v0.0.1) and publish [manifest](https://github.com/version-fox/vfox-plugin-template/releases/tag/manifest).
+# Use a specific version
+vfox use chaosblade@1.7.4
+```
+
+## Notice
+
+1. Chaosblade is a command-line tool for experimental injection provided by Alibaba. Make sure it's in your system PATH after installation.
+
+2. This plugin downloads pre-built binaries from the official Chaosblade releases, so no compilation is required.
+
+3. Ensure you have appropriate permissions to run experimental tools in your environment.
+
+## Supported Platforms
+
+- Linux (x86_64, ARM64)
+- macOS (x86_64, ARM64)
+- Windows (x86_64)
+
+## Legacy Version Files
+
+This plugin supports the following legacy version files:
+- `.chaosblade-version`
+
+## License
+
+Apache 2.0
+
+## Acknowledgements
+
+Thanks for these awesome resources that were used during the development of the **vfox-chaosblade**:
+
+- [Chaosblade](https://github.com/chaosblade-io/chaosblade)
+- [vfox](https://github.com/version-fox/vfox)
+- [vfox-plugin-template](https://github.com/version-fox/vfox-plugin-template)
