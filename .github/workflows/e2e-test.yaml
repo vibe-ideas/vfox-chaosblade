@@ -1,0 +1,52 @@
+name: E2E tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e_tests:
+    strategy:
+      matrix:
+        # ref: https://github.com/actions/runner-images
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '^1.24.2' # The Go version to download (if necessary) and use.
+
+      - name: build & install vfox (Unix-like)
+        if: runner.os != 'Windows'
+        run: |
+          git clone https://github.com/version-fox/vfox.git
+          cd vfox
+          go build -o vfox
+          chmod +x vfox
+          cp vfox /usr/local/bin
+
+      - name: add vfox-chaosblade plugin
+        if: runner.os != 'Windows'
+        run: |
+          vfox add --source https://github.com/${{ github.repository_owner }}/vfox-chaosblade/archive/${GITHUB_REF}.zip chaosblade
+
+      - name: install chaosblade by vfox-chaosblade plugin (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          vfox install chaosblade@1.7.4
+          vfox use -g chaosblade@1.7.4
+          eval "$(vfox activate bash)"
+          echo "===============PATH==============="
+          echo $PATH
+          echo "===============PATH==============="
+          status=$(blade -v | grep 1.7.4)
+          if [ -z "$status" ]; then
+            echo "chaosblade version is not 1.7.4"
+            exit 1
+          else
+            echo "chaosblade version 1.7.4 installed successfully"
+          fi
