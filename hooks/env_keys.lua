@@ -1,18 +1,17 @@
---- Returns some environment variables that need to be set.
---- @param ctx table
---- @field ctx.version string The version of the tool currently in use
---- @field ctx.rootPath string The root path of the tool currently in use
---- @return table Environment variables to be set
+--- Each SDK may have different environment variable configurations.
+--- This allows plugins to define custom environment variables (including PATH settings)
+--- Note: Be sure to distinguish between environment variable settings for different platforms!
+--- @param ctx table Context information
+--- @field ctx.path string SDK installation directory
 function PLUGIN:EnvKeys(ctx)
-    print("ctx.rootPath", ctx.rootPath)
     return {
         {
             key = "CHAOSBLADE_HOME",
-            value = ctx.rootPath
+            value = ctx.path
         },
         {
             key = "PATH",
-            value = ctx.rootPath
+            value = ctx.path
         }
     }
 end
