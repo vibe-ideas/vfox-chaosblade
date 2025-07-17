@@ -4,6 +4,7 @@
 --- @field ctx.rootPath string The root path of the tool currently in use
 --- @return table Environment variables to be set
 function PLUGIN:EnvKeys(ctx)
+    print("ctx.rootPath", ctx.rootPath)
     return {
         {
             key = "CHAOSBLADE_HOME",
@@ -11,7 +12,7 @@ function PLUGIN:EnvKeys(ctx)
         },
         {
             key = "PATH",
-            value = ctx.rootPath .. "/bin"
+            value = ctx.rootPath
         }
     }
 end

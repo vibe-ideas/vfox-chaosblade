@@ -7,13 +7,11 @@ local util = require("util")
 --- @return table Version information
 function PLUGIN:PreInstall(ctx)
     local version = ctx.version
-    local info, err = util:GetDownloadInfo(version)
-    if err then
-        error(err)
-    end
+    local download_url = util:GetDownloadInfo(version)
+    -- https://github.com/chaosblade-io/chaosblade/releases/download/v1.7.2/chaosblade-1.7.2-linux-amd64.tar.gz
+    print("Download URL: " .. download_url)
     return {
         version = version,
-        url = info.url,
-        sha256 = info.sha256
+        url = download_url
     }
 end
