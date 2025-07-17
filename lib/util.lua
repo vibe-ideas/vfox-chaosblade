@@ -26,8 +26,8 @@ end
 
 function util:GetDownloadInfo(version)
     local os_type = RUNTIME.osType
-    if os_type ~= "Linux" then
-        return nil, "Unsupported OS type: " .. os_type
+    if os_type:lower() ~= "linux" then
+        print("Unsupported OS type: " .. os_type)
     end
 
     local arch = RUNTIME.archType
