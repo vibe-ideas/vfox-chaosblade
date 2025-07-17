@@ -45,3 +45,5 @@ jobs:
             Bash
             Edit
             Replace
+          additional_permissions: |
+            actions: read
