@@ -6,9 +6,7 @@ ChaosBlade is an Alibaba open source chaos engineering toolkit that follows the 
 
 ## Requirements
 
-- Linux (currently only Linux is supported)
-- curl or wget (for downloading releases)
-- tar (for extracting archives)
+- Linux System (currently only Linux is supported)
 
 ## Usage
 
@@ -23,26 +21,22 @@ vfox search chaosblade
 vfox install chaosblade@1.7.4
 
 # use a specific version
-vfox use chaosblade@1.7.4
+vfox use chaosblade@1.7.4 -g
 
 # verify installation
-chaosblade version
+blade version
 ```
 
 ## Notice
 
-1. Make sure `tar` and `curl` (or `wget`) are available in your system PATH.
+1. ChaosBlade binaries will be installed to the vfox managed directory and automatically added to your PATH when activated.
 
-2. ChaosBlade binaries will be installed to the vfox managed directory and automatically added to your PATH when activated.
-
-3. The plugin sets the `CHAOSBLADE_HOME` environment variable to point to the installation directory.
-
-4. You can use `.chaosblade-version` files in your projects to specify the ChaosBlade version for that project.
+2. The plugin sets the `CHAOSBLADE_HOME` environment variable to point to the installation directory.
 
 ## Known Issues
 
 - Currently only supports Linux systems (Windows and macOS support not implemented yet)
-- Requires x86_64 or amd64 architecture
+- Requires arm64 or amd64 architecture
 
 ## Acknowledgements
 
