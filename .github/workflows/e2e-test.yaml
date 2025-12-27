@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         # ref: https://github.com/actions/runner-images
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -49,4 +49,21 @@ jobs:
             exit 1
           else
             echo "chaosblade version 1.7.4 installed successfully"
+          fi
+
+      - name: install chaosblade by vfox-chaosblade plugin (MacOS)
+        if: runner.os == 'MacOS'
+        run: |
+          vfox install chaosblade@1.8.0
+          vfox use -g chaosblade@1.8.0
+          eval "$(vfox activate bash)"
+          echo "===============PATH==============="
+          echo $PATH
+          echo "===============PATH==============="
+          status=$(blade version | grep 1.8.0)
+          if [ -z "$status" ]; then
+            echo "chaosblade version is not 1.8.0"
+            exit 1
+          else
+            echo "chaosblade version 1.8.0 installed successfully"
           fi

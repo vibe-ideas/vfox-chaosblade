@@ -6,7 +6,8 @@ ChaosBlade is an Alibaba open source chaos engineering toolkit that follows the 
 
 ## Requirements
 
-- Linux System (currently only Linux is supported)
+- Linux or MacOS System
+- MacOS only support chaosblade 1.8.0 or later version
 
 ## Usage
 
