@@ -28,6 +28,14 @@ vfox use chaosblade@1.7.4 -g
 blade version
 ```
 
+### Usage with mise
+
+```shell
+mise plugins install chaosblade https://github.com/vibe-ideas/vfox-chaosblade.git
+mise use chaosblade@latest
+```
+
+
 ## Notice
 
 1. ChaosBlade binaries will be installed to the vfox managed directory and automatically added to your PATH when activated.
