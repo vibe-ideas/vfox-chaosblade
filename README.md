@@ -11,6 +11,8 @@ ChaosBlade is an Alibaba open source chaos engineering toolkit that follows the 
 
 ## Usage
 
+### Install with vfox
+
 ```shell
 # install plugin
 vfox add --source https://github.com/vibe-ideas/vfox-chaosblade/archive/refs/heads/main.zip chaosblade
@@ -28,11 +30,22 @@ vfox use chaosblade@1.7.4 -g
 blade version
 ```
 
-### Usage with mise
+### Install with mise
+
+The vfox-chaosblade plugin can also be used through [mise](https://mise.jdx.dev/), which supports vfox plugins.
 
 ```shell
-mise plugins install chaosblade https://github.com/vibe-ideas/vfox-chaosblade.git
-mise use chaosblade@latest
+# install the plugin
+mise plugin install chaosblade https://github.com/vibe-ideas/vfox-chaosblade.git
+
+# search available versions
+mise ls-remote chaosblade
+
+# install and activate
+mise use -g chaosblade@1.7.4
+
+# run chaosblade
+blade version
 ```
 
 

@@ -5,11 +5,28 @@ local util = {}
 local GITHUB_API_URL = "https://api.github.com/repos/chaosblade-io/chaosblade/releases"
 
 function util:Available()
+    local headers = {}
+    local token = os.getenv("GITHUB_TOKEN")
+    if token and token ~= "" then
+        headers["Authorization"] = "Bearer " .. token
+    end
     local resp, err = http.get({
-        url = GITHUB_API_URL
+        url = GITHUB_API_URL,
+        headers = headers
     })
     if err ~= nil or resp.status_code ~= 200 then
-        return nil, "Failed to fetch releases from GitHub API."
+        -- Fallback to a hardcoded list of stable versions if GitHub API is rate-limited or fails
+        return {
+            {version = "1.8.0", note = ""},
+            {version = "1.7.5", note = ""},
+            {version = "1.7.4", note = ""},
+            {version = "1.7.3", note = ""},
+            {version = "1.7.2", note = ""},
+            {version = "1.7.1", note = ""},
+            {version = "1.7.0", note = ""},
+            {version = "1.6.1", note = ""},
+            {version = "1.6.0", note = ""}
+        }
     end
     local releases = json.decode(resp.body)
     local versions = {}

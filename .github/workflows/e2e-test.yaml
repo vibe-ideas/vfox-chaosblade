@@ -69,3 +69,42 @@ jobs:
           else
             echo "chaosblade version 1.8.0 installed successfully"
           fi
+
+      - name: install chaosblade by vfox-chaosblade plugin via mise (Linux)
+        if: runner.os == 'Linux'
+        env:
+          PLUGIN_REF: ${{ github.head_ref || github.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sS https://mise.run > /tmp/mise-install.sh
+          sh /tmp/mise-install.sh
+          export PATH="$HOME/.local/bin:$PATH"
+          $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
+          $HOME/.local/bin/mise use -g "chaosblade@1.7.4"
+          status=$($HOME/.local/bin/mise exec -- blade version | grep 1.7.4)
+          if [ -z "$status" ]; then
+            echo "chaosblade version via mise is not 1.7.4"
+            exit 1
+          else
+            echo "chaosblade version 1.7.4 installed successfully via mise"
+          fi
+
+      - name: install chaosblade by vfox-chaosblade plugin via mise (macOS)
+        if: runner.os == 'MacOS'
+        env:
+          PLUGIN_REF: ${{ github.head_ref || github.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sS https://mise.run > /tmp/mise-install.sh
+          sh /tmp/mise-install.sh
+          export PATH="$HOME/.local/bin:$PATH"
+          $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
+          $HOME/.local/bin/mise use -g "chaosblade@1.8.0"
+          status=$($HOME/.local/bin/mise exec -- blade version | grep 1.8.0)
+          if [ -z "$status" ]; then
+            echo "chaosblade version via mise is not 1.8.0"
+            exit 1
+          else
+            echo "chaosblade version 1.8.0 installed successfully via mise"
+          fi
+
