@@ -76,7 +76,8 @@ jobs:
           PLUGIN_REF: ${{ github.head_ref || github.sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl https://mise.run | sh
+          curl -sS https://mise.run > /tmp/mise-install.sh
+          sh /tmp/mise-install.sh
           export PATH="$HOME/.local/bin:$PATH"
           $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
           $HOME/.local/bin/mise use -g "chaosblade@1.7.4"
@@ -94,7 +95,8 @@ jobs:
           PLUGIN_REF: ${{ github.head_ref || github.sha }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl https://mise.run | sh
+          curl -sS https://mise.run > /tmp/mise-install.sh
+          sh /tmp/mise-install.sh
           export PATH="$HOME/.local/bin:$PATH"
           $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
           $HOME/.local/bin/mise use -g "chaosblade@1.8.0"
