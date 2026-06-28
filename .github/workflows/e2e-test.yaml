@@ -74,6 +74,7 @@ jobs:
         if: runner.os == 'Linux'
         env:
           PLUGIN_REF: ${{ github.head_ref || github.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl https://mise.run | sh
           export PATH="$HOME/.local/bin:$PATH"
@@ -91,6 +92,7 @@ jobs:
         if: runner.os == 'MacOS'
         env:
           PLUGIN_REF: ${{ github.head_ref || github.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl https://mise.run | sh
           export PATH="$HOME/.local/bin:$PATH"
