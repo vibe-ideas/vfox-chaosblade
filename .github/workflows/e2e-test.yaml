@@ -91,39 +91,16 @@ jobs:
         if: runner.os == 'MacOS'
         env:
           PLUGIN_REF: ${{ github.head_ref || github.sha }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set +e
-          echo "=== Debug Output ===" > debug.log
-          
-          echo "=== 1. Install mise ===" >> debug.log
-          curl https://mise.run | sh 2>&1 >> debug.log
+          curl https://mise.run | sh
           export PATH="$HOME/.local/bin:$PATH"
-          
-          echo "=== 2. Install plugin ===" >> debug.log
-          $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}" 2>&1 >> debug.log
-          echo "Exit code: $?" >> debug.log
-          
-          echo "=== 3. Use chaosblade ===" >> debug.log
-          $HOME/.local/bin/mise use -g "chaosblade@1.8.0" 2>&1 >> debug.log
-          echo "Exit code: $?" >> debug.log
-          
-          echo "=== 4. Exec blade version ===" >> debug.log
-          $HOME/.local/bin/mise exec -- blade version 2>&1 >> debug.log
-          echo "Exit code: $?" >> debug.log
-          
-          cat debug.log
-          
-          if [ -n "${{ github.event.pull_request.number }}" ]; then
-            PAYLOAD=$(jq -n --arg body "### macOS CI Debug Log
-          \`\`\`
-          $(cat debug.log)
-          \`\`\`" '{body: $body}')
-            curl -s -X POST -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments \
-              -d "$PAYLOAD"
+          $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
+          $HOME/.local/bin/mise use -g "chaosblade@1.8.0"
+          status=$($HOME/.local/bin/mise exec -- blade version | grep 1.8.0)
+          if [ -z "$status" ]; then
+            echo "chaosblade version via mise is not 1.8.0"
+            exit 1
+          else
+            echo "chaosblade version 1.8.0 installed successfully via mise"
           fi
-          
-          $HOME/.local/bin/mise exec -- blade version | grep 1.8.0
 
