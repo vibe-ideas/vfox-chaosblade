@@ -36,7 +36,7 @@ The vfox-chaosblade plugin can also be used through [mise](https://mise.jdx.dev/
 
 ```shell
 # install the plugin
-mise plugin install chaosblade https://github.com/vibe-ideas/vfox-chaosblade/archive/refs/heads/main.zip
+mise plugin install chaosblade https://github.com/vibe-ideas/vfox-chaosblade.git
 
 # search available versions
 mise ls-remote chaosblade

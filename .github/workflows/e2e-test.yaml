@@ -77,9 +77,8 @@ jobs:
         run: |
           curl https://mise.run | sh
           export PATH="$HOME/.local/bin:$PATH"
-          PLUGIN_NAME="vfox-$(echo '${{ github.repository }}' | tr '/' '-')"
-          $HOME/.local/bin/mise plugins install --force "$PLUGIN_NAME" "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
-          $HOME/.local/bin/mise use -g "vfox:${{ github.repository }}@1.7.4"
+          $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
+          $HOME/.local/bin/mise use -g "chaosblade@1.7.4"
           status=$($HOME/.local/bin/mise exec -- blade version | grep 1.7.4)
           if [ -z "$status" ]; then
             echo "chaosblade version via mise is not 1.7.4"
@@ -95,9 +94,8 @@ jobs:
         run: |
           curl https://mise.run | sh
           export PATH="$HOME/.local/bin:$PATH"
-          PLUGIN_NAME="vfox-$(echo '${{ github.repository }}' | tr '/' '-')"
-          $HOME/.local/bin/mise plugins install --force "$PLUGIN_NAME" "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
-          $HOME/.local/bin/mise use -g "vfox:${{ github.repository }}@1.8.0"
+          $HOME/.local/bin/mise plugins install --force chaosblade "https://github.com/${{ github.repository }}.git#${PLUGIN_REF}"
+          $HOME/.local/bin/mise use -g "chaosblade@1.8.0"
           status=$($HOME/.local/bin/mise exec -- blade version | grep 1.8.0)
           if [ -z "$status" ]; then
             echo "chaosblade version via mise is not 1.8.0"
